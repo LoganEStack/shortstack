@@ -12,6 +12,7 @@ function Home() {
             </header>
             <UrlForm />
             <Response response=""/>
+            {/* © 2025 Logan Stack */}
         </main>
     )
 }
