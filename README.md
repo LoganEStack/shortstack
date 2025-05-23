@@ -6,7 +6,7 @@ A URL shortening service.
 <!-- ABOUT -->
 ## About the Project
 This app is a simple clone of TinyURL meant to further my understanding of full stack application development.
-
+![Product Name Screen Shot][product-screenshot]
 
 <!-- SYSTEM DESIGN -->
 ## System Design
@@ -86,3 +86,18 @@ frontend/
    ```sh
    git clone https://github.com/LoganEStack/shortstack.git
    ```
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+[product-screenshot]: frontend/src/assets/product-screenshot.png
+
+
+
+
+🐳 Containerize with Docker.
+
+🧪 Add unit tests (backend first, then frontend).
+
+🔁 Set up a dev + production config.
+
+⚙️ Add CI/CD with GitHub Actions.

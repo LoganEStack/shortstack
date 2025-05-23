@@ -1,12 +1,11 @@
 import { useState } from 'react'
 
+
 function UrlForm({ setResponse }) {
     const [url, setUrl] = useState('https://example.com/')
     const [alias, setAlias] = useState('')
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
+    async function fetchJSON(url, options = {}) {
         // Validate alias if provided
         if (alias && (alias.length < 5 || alias.length > 16)) {
             setResponse([false, 'Alias must be between 5-16 characters long.']);
@@ -14,25 +13,38 @@ function UrlForm({ setResponse }) {
         }
 
         try {
-            const res = await fetch('http://localhost:5000/shorten', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ url: url, alias: alias })
-            });
-
+            const res = await fetch(url, options);
             const data = await res.json();
 
-            if (res.ok) {
-                setResponse([true, data.short_url]);
-            } else {
-                setResponse([false, data.error]);
+            if (!res.ok) {
+                return {
+                    success: false,
+                    status: res.status,
+                    error: data?.error || res.statusText || 'Unknown error',
+                };
             }
+            return {
+                success: true,
+                status: res.status,
+                data,
+            };
         } catch (err) {
-            setResponse([false, 'Network error or server not responding.']);
-            console.error('Request failed:', err);
+            return {
+                success: false,
+                status: null,
+                error: 'Network error or server not responding',
+            };
         }
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const result = await fetchJSON('http://localhost:5000/shorten', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url: url, alias: alias }),
+        });
+        setResponse(result)
     };
 
     return (

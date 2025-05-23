@@ -6,7 +6,6 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      {/* Add more pages later like /success or /analytics */}
     </Routes>
   )
 }

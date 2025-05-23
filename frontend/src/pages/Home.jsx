@@ -4,7 +4,7 @@ import Response from '../components/Response'
 
 
 function Home() {
-    const [response, setResponse] = useState([])
+    const [response, setResponse] = useState({})
 
     return (
         <main>

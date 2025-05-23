@@ -7,6 +7,16 @@
     --coffee: #634d45;
 }
 
+::-moz-selection { /* Code for Firefox */
+  color: white;
+  background: var(--jam);
+}
+
+::selection {
+  color: white;
+  background: var(--jam);
+}
+
 html,
 body {
     font-family: "Lato", "Calibri", sans-serif;
