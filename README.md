@@ -51,9 +51,6 @@ created_at	|   TIMESTAMP     |   When the short URL was created
 clicks	   |   INTEGER       |   Number of times accessed
 
 
-
-
-
 <!-- STRUCTURE -->
 ## Project Structure
 backend/
@@ -94,11 +91,13 @@ frontend/
 
 
 
-
-🐳 Containerize with Docker.
-
-🧪 Add unit tests (backend first, then frontend).
-
-🔁 Set up a dev + production config.
-
-⚙️ Add CI/CD with GitHub Actions.
+- Add reading and deleting of database entries (show all; search by website, search by ID)
+- Change url encoding method
+- Change/focus DB
+- Add cache
+- DB Cleanup
+- Limit DB size to hosting maximum and "close" site until space is freed.
+- "User creation is out of scope for this project. Requests for database information require an auth token defined by the author."
+- Containerize with Docker.
+- Set up a dev + production config.
+- Add CI/CD with GitHub Actions.

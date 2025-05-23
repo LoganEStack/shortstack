@@ -39,10 +39,14 @@ function UrlForm({ setResponse }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const expiration_date = new Date();
+        expiration_date.setDate(expiration_date.getDate() + 7);
+        const expiration_date_ISO8601 = expiration_date.toISOString();
+
         const result = await fetchJSON('http://localhost:5000/shorten', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ url: url, alias: alias }),
+            body: JSON.stringify({ url: url, alias: alias, expiration_date: expiration_date_ISO8601 }),
         });
         setResponse(result)
     };
