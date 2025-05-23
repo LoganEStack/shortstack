@@ -15,13 +15,19 @@ def generate_short_code(length=6):
 def shorten_url():
     data = request.get_json()
     original_url = data.get('url')
+    alias = data.get('alias')
 
     if not original_url:
         return jsonify({'error': 'URL is required'}), 400
 
-    code = generate_short_code()
-    while URL.query.filter_by(short_code=code).first(): # Avoids duplicate short codes by checking the database.
+    if alias:
+        code = alias
+        if URL.query.filter_by(short_code=code).first():
+            return jsonify({'error': 'Alias is already taken'}), 400
+    else:
         code = generate_short_code()
+        while URL.query.filter_by(short_code=code).first(): # Avoids duplicate short codes by checking the database.
+            code = generate_short_code()
 
     new_url = URL(original_url=original_url, short_code=code)
     db.session.add(new_url)
