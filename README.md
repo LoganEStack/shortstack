@@ -2,11 +2,12 @@
 # Short Stack
 A URL shortening service.
 
+![Product Name Screen Shot][product-screenshot]
+
 
 <!-- ABOUT -->
 ## About the Project
 This app is a simple clone of TinyURL meant to further my understanding of full stack application development.
-![Product Name Screen Shot][product-screenshot]
 
 <!-- SYSTEM DESIGN -->
 ## System Design
