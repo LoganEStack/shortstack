@@ -46,7 +46,7 @@ function UrlForm({ setResponse }) {
         const result = await fetchJSON('http://localhost:5000/shorten', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ url: url, alias: alias, expiration_date: expiration_date_ISO8601 }),
+            body: JSON.stringify({ url: url, expiration_date: expiration_date_ISO8601, alias: alias }),
         });
         setResponse(result)
     };

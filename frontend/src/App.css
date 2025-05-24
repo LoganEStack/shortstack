@@ -7,31 +7,22 @@
     --coffee: #634d45;
 }
 
-::-moz-selection { /* Code for Firefox */
-  color: white;
-  background: var(--jam);
-}
-
-::selection {
-  color: white;
-  background: var(--jam);
-}
-
 html,
 body {
     font-family: "Lato", "Calibri", sans-serif;
     margin: 0;
-    padding: 2rem;
     text-align: center;
     color: var(--coffee);
     background-color: var(--milk);
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     min-height: 100vh;
     position: relative;
+    box-sizing: border-box;
 }
 
 header {
@@ -48,6 +39,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 2rem;
     width: 100%;
     max-width: 400px;
 }
@@ -140,4 +132,8 @@ input[type="submit"]:active {
     font-size: 0.9rem;
     opacity: 0.7;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    z-index: 10;
+    background-color: var(--milk);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
 }

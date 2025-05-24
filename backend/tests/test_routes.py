@@ -1,4 +1,5 @@
 import pytest
+from datetime import datetime, timedelta, timezone
 from app import create_app
 
 @pytest.fixture
@@ -8,8 +9,12 @@ def client():
     with app.test_client() as client:
         yield client
 
+def get_future_expiration(days=7):
+    return (datetime.now(timezone.utc) + timedelta(days=days)).isoformat()
+
+
 def test_shorten_valid_url(client):
-    response = client.post('/shorten', json={'url': 'https://example.com'})
+    response = client.post('/shorten', json={'url': 'https://example.com', 'expiration_date': get_future_expiration()})
     assert response.status_code == 200
     data = response.get_json()
     assert 'short_url' in data
@@ -26,7 +31,7 @@ def test_shorten_invalid_json(client):
 
 def test_redirect_existing_code(client):
     # First shorten a URL
-    shorten = client.post('/shorten', json={'url': 'https://example.com'})
+    shorten = client.post('/shorten', json={'url': 'https://example.com', 'expiration_date': get_future_expiration()})
     short_url = shorten.get_json()['short_url']
     code = short_url.rsplit('/', 1)[-1]
 

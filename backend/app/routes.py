@@ -19,45 +19,46 @@ def is_valid_url(url: str):
         return False
 
 
-def validate_request(original_url:str, alias:str, expiration_date:date):
-    # Validate URL
+def validate_request(original_url:str, expiration_date:date, alias:str):
     if not original_url:
         return jsonify({'error': 'URL is required'}), 400
     if not is_valid_url(original_url):
         return jsonify({'error': 'URL is not valid'}), 400
     
-    # Validate alias or generate random code
-    if alias:
-        code = alias
-        if not re.search("^[a-zA-Z0-9_-]{0,16}$", code) or len(code) < 5 or len(code) >= 16:
-            return jsonify({'error': 'Alias must contain 5-16 alphanumeric characters, dashes, or underscores'}), 400
-        if URL.query.filter_by(short_code=code).first():
-            return jsonify({'error': 'Alias is already taken'}), 400
-    else:
-        code = generate_short_code()
-        # Avoids duplicate short codes by checking the database.
-        while URL.query.filter_by(short_code=code).first():
-            code = generate_short_code()
-
-    # Validate expiration date
     if not expiration_date:
         return jsonify({'error': 'Expiration date not included in request.'}), 400
-    try:
-        expiration_date = datetime.fromisoformat(expiration_date)
-    except ValueError:
-        return jsonify({'error': 'Invalid expiration_date format'}), 400
     
-    return (code, expiration_date)
+    if alias:
+        if not re.search("^[a-zA-Z0-9_-]{0,16}$", alias) or len(alias) < 5 or len(alias) >= 16:
+            return jsonify({'error': 'Alias must contain 5-16 alphanumeric characters, dashes, or underscores'}), 400
+        if URL.query.filter_by(short_code=alias).first():
+            return jsonify({'error': 'Alias is already taken'}), 400
+    
+    return
 
 
 @main.route('/shorten', methods=['POST'])
 def shorten_url():
     data = request.get_json()
     original_url = data.get('url')
-    alias = data.get('alias')
     expiration_date = data.get('expiration_date')
+    alias = data.get('alias')
 
-    code, expiration_date = validate_request(original_url, alias, expiration_date)
+    error = validate_request(original_url, expiration_date, alias)
+    if error:
+        return error
+
+    try:
+        expiration_date = datetime.fromisoformat(expiration_date)
+    except ValueError:
+        return jsonify({'error': 'Invalid expiration_date format'}), 400
+    
+    code = alias
+    if not alias:
+        code = generate_short_code()
+        # Avoids duplicate short codes by checking the database.
+        while URL.query.filter_by(short_code=code).first():
+            code = generate_short_code()
 
     new_url = URL(original_url=original_url, short_code=code,
                   expiration_date=expiration_date)
