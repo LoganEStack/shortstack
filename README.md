@@ -85,6 +85,11 @@ frontend/
    git clone https://github.com/LoganEStack/shortstack.git
    ```
 
+### Environment
+.env file
+FLASK_ENV=development
+DATABASE_URL=postgresql://*user*:*pass*@localhost:*port*/*db_name*
+SECRET_KEY=*key*
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [product-screenshot]: frontend/src/assets/product-screenshot.png
@@ -93,8 +98,8 @@ frontend/
 - DB routes
 - DB cleanup
 - Limit DB size to hosting maximum and "close" site until space is freed.
-- "User creation is out of scope for this project. Requests for database information require an auth token defined by the author."
-- Containerize with Docker.
+
 - Set up a dev + production config.
+- Containerize with Docker.
 - Add CI/CD with GitHub Actions.
 - Add cache.

@@ -3,6 +3,7 @@ from config import Config
 from .routes import main
 from .routes_debug import debug
 from .db import db
+from .limiter import limiter
 from flask_cors import CORS
 
 
@@ -14,6 +15,7 @@ def create_app():
     db.init_app(app)
     app.register_blueprint(main)
     app.register_blueprint(debug)
+    limiter.init_app(app)
 
     with app.app_context():
         db.create_all()

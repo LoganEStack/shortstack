@@ -4,6 +4,7 @@ from flask import Blueprint, request, jsonify, redirect
 from sqlalchemy import text
 from .models import URL
 from .db import db
+from .limiter import limiter
 from .utils import is_valid_url
 from .short_code_gen import generate_short_code
 
@@ -35,6 +36,7 @@ def get_db_size():
 
 
 @main.route('/shorten', methods=['POST'])
+@limiter.limit("10 per minute")
 def shorten_url():
     """Returns a string to be used as a short URL and writes it to a DB."""
 
