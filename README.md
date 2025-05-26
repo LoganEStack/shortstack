@@ -90,12 +90,8 @@ frontend/
 [product-screenshot]: frontend/src/assets/product-screenshot.png
 
 
-
-- scrolling
-- Add reading and deleting of database entries (show all; search by website, search by ID)
-- Change url encoding method
-- Change DB type to something more official
-- DB Cleanup
+- DB routes
+- DB cleanup
 - Limit DB size to hosting maximum and "close" site until space is freed.
 - "User creation is out of scope for this project. Requests for database information require an auth token defined by the author."
 - Containerize with Docker.

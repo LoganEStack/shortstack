@@ -44,6 +44,10 @@ main {
     max-width: 400px;
 }
 
+a {
+  color: var(--jam);
+}
+
 form {
     display: flex;
     flex-direction: column;

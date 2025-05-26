@@ -1,9 +1,17 @@
-import { useState } from 'react'
-
 function Response({ response }) {
     if (Object.keys(response).length) {
         console.log(response)
         if (response.success) {
+            const date = new Date(response.data.expiration_date);
+            const formatted = date.toLocaleString(undefined, {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
+
             return (
                 <div className="card">
                     <p>Your shortened URL is:</p>
@@ -12,7 +20,7 @@ function Response({ response }) {
                             {response.data.short_url}
                         </a>
                     </p>
-                    <i>It will expire on {response.data.expiration_date}</i>
+                    <i>It will expire on {formatted}</i>
                 </div>
             )
         } else {

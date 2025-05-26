@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from .db import db
 
 
@@ -6,3 +7,4 @@ class URL(db.Model):
     original_url = db.Column(db.String(2048), nullable=False)
     short_code = db.Column(db.String(8), unique=True, nullable=False)
     expiration_date = db.Column(db.DateTime, nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
