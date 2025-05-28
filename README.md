@@ -51,6 +51,10 @@ created_at	|   TIMESTAMP     |   When the short URL was created
 clicks	   |   INTEGER       |   Number of times accessed
 
 
+### Data
+Limits to 200 MB at one time. Each entry is roughly ~ 160 bytes per row resulting in about 1.2 million entries.
+
+
 <!-- STRUCTURE -->
 ## Project Structure
 backend/
@@ -89,17 +93,14 @@ frontend/
 .env file
 FLASK_ENV=development
 DATABASE_URL=postgresql://*user*:*pass*@localhost:*port*/*db_name*
-SECRET_KEY=*key*
+API_KEY=*key*
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [product-screenshot]: frontend/src/assets/product-screenshot.png
 
 
-- DB routes
-- DB cleanup
-- Limit DB size to hosting maximum and "close" site until space is freed.
+- Implement Pytest fixtures
+- Resolve limiter storage warning
 
-- Set up a dev + production config.
-- Containerize with Docker.
+- Containerize with Docker.   Is it better to containerize with Docker before hosting my project?
 - Add CI/CD with GitHub Actions.
-- Add cache.

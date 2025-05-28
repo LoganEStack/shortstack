@@ -1,11 +1,12 @@
+from datetime import datetime, timezone
 from app import create_app, db
 from app.models import URL
-from datetime import datetime
 
 app = create_app()
 
 with app.app_context():
-    expired_urls = URL.query.filter(URL.expiration_date < datetime.utcnow()).all()
+    now = datetime.now(timezone.utc)
+    expired_urls = URL.query.filter(URL.expiration_date < now).all()
     for url in expired_urls:
         db.session.delete(url)
     db.session.commit()

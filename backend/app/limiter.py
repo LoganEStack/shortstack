@@ -1,6 +1,6 @@
-# app/limiter.py
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from flask_limiter.errors import RateLimitExceeded
 from flask import request, jsonify
 
 limiter = Limiter(get_remote_address)
@@ -11,11 +11,8 @@ def exempt_internal_ips():
     return request.remote_addr in ["127.0.0.1", "::1", "localhost"]
 
 
-@limiter.error_handler
-def rate_limit_exceeded(e):
+def register_error_handlers(app):
     """Custom error response."""
-    return jsonify({
-        "error": "Rate limit exceeded",
-        "message": "You've hit the limit. Please try again later.",
-        "retry_after": e.description  # This provides Retry-After header info
-    }), 429
+    @app.errorhandler(RateLimitExceeded)
+    def ratelimit_handler(e):
+        return jsonify({"error": "Too many requests have been sent. Please wait before sending more."}), 429

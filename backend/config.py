@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class Config:
-    SECRET_KEY = os.getenv('SECRET_KEY', 'default-key')
+    API_KEY = os.getenv('API_KEY')
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    RATE_LIMIT=os.getenv('RATE_LIMIT')

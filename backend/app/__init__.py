@@ -1,10 +1,11 @@
 from flask import Flask
+from flask_cors import CORS
 from config import Config
+
 from .routes import main
 from .routes_debug import debug
 from .db import db
-from .limiter import limiter
-from flask_cors import CORS
+from .limiter import limiter, register_error_handlers
 
 
 def create_app():
@@ -15,9 +16,11 @@ def create_app():
     db.init_app(app)
     app.register_blueprint(main)
     app.register_blueprint(debug)
-    limiter.init_app(app)
 
     with app.app_context():
         db.create_all()
+
+    limiter.init_app(app)
+    register_error_handlers(app)
 
     return app
