@@ -26,9 +26,7 @@ Non-Functional Requirements:
 ### Tech Stack
 - Frontend: React
 - Backend: Flask (Python)
-- Database: PostgreSQL (or SQLite for simplicity)
-- Cache (optional): Redis for quick URL lookups
-- Testing: pytest (backend), React Testing Library (frontend)
+- Database: PostgreSQL
 - Containerization: Docker
 - CI/CD: GitHub Actions
 

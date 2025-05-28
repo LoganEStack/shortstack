@@ -26,21 +26,21 @@ def test_redirect_unknown_code(client):
 
 def test_api_key(client):
     """Valid API key."""
-    response = client.get('/debug/db/stats', headers={'X-API-Key': API_KEY})
+    response = client.get('/admin/db/stats', headers={'X-API-Key': API_KEY})
     assert response.status_code == 200
 
 
 def test_invalid_api_key(client):
     """Invalid API key."""
-    response = client.get('/debug/db/stats', headers={'X-API-Key': 'wrong-key'})
+    response = client.get('/admin/db/stats', headers={'X-API-Key': 'wrong-key'})
     assert response.status_code == 401
 
 
 def test_no_api_key(client):
     """No API key."""
-    response = client.get('/debug/db/stats')
+    response = client.get('/admin/db/stats')
     assert response.status_code == 401
-    response = client.get('/debug/db/stats', headers={'X-API-Key': ''})
+    response = client.get('/admin/db/stats', headers={'X-API-Key': ''})
     assert response.status_code == 401
 
 
@@ -57,7 +57,7 @@ def test_shorten_valid_url(client):
     short_code = short_url.rstrip('/').split('/')[-1]
 
     delete_response = client.delete(
-        f'/debug/db/{short_code}',
+        f'/admin/db/{short_code}',
         headers={'X-API-Key': API_KEY}
     )
     assert delete_response.status_code == 200
@@ -66,7 +66,7 @@ def test_shorten_valid_url(client):
 def test_shorten_valid_url_alias(client):
     """/shorten valid request with alias."""
     ALIAS = "test_alias"
-    client.delete(f'/debug/db/{ALIAS}', headers={'X-API-Key': API_KEY})
+    client.delete(f'/admin/db/{ALIAS}', headers={'X-API-Key': API_KEY})
 
     response = client.post(
         '/shorten',
@@ -84,7 +84,7 @@ def test_shorten_valid_url_alias(client):
     short_code = short_url.rstrip('/').split('/')[-1]
 
     delete_response = client.delete(
-        f'/debug/db/{short_code}',
+        f'/admin/db/{short_code}',
         headers={'X-API-Key': API_KEY}
     )
     assert delete_response.status_code == 200
@@ -93,7 +93,7 @@ def test_shorten_valid_url_alias(client):
 def test_shorten_alias_taken(client):
     """/shorten valid request but alias already taken."""
     ALIAS = "test_alias"
-    client.delete(f'/debug/db/{ALIAS}', headers={'X-API-Key': API_KEY})
+    client.delete(f'/admin/db/{ALIAS}', headers={'X-API-Key': API_KEY})
     
     response = client.post(
         '/shorten',
@@ -117,7 +117,7 @@ def test_shorten_alias_taken(client):
     short_code = short_url.rstrip('/').split('/')[-1]
 
     delete_response = client.delete(
-        f'/debug/db/{short_code}',
+        f'/admin/db/{short_code}',
         headers={'X-API-Key': API_KEY}
     )
     assert delete_response.status_code == 200
@@ -167,25 +167,25 @@ def test_redirect_existing_code(client):
 
 
 def test_get_stats(client):
-    """/debug/db/stats valid request."""
-    response = client.get('/debug/db/stats', headers={'X-API-Key': API_KEY})
+    """/admin/db/stats valid request."""
+    response = client.get('/admin/db/stats', headers={'X-API-Key': API_KEY})
     assert response.status_code == 200
 
 
 def test_get_urls(client):
-    """/debug/db/urls valid request."""
-    response = client.get('/debug/db/urls', headers={'X-API-Key': API_KEY})
+    """/admin/db/urls valid request."""
+    response = client.get('/admin/db/urls', headers={'X-API-Key': API_KEY})
     assert response.status_code == 200
-    response = client.get('/debug/db/urls?page=1&limit=10',
+    response = client.get('/admin/db/urls?page=1&limit=10',
                            headers={'X-API-Key': API_KEY})
     assert response.status_code == 200
-    response = client.get('/debug/db/urls?page=10&limit=10',
+    response = client.get('/admin/db/urls?page=10&limit=10',
                            headers={'X-API-Key': API_KEY})
     assert response.status_code == 200
 
 
 def test_get_url_by_code(client):
-    """/debug/db/<short_code> valid request."""
+    """/admin/db/<short_code> valid request."""
     response = client.post(
         '/shorten', json={'url': 'https://example.com', 'expiration_date': get_future_expiration()}
     )
@@ -197,19 +197,19 @@ def test_get_url_by_code(client):
     short_url = data['short_url']
     short_code = short_url.rstrip('/').split('/')[-1]
 
-    response = client.get(f'/debug/db/{short_code}', headers={'X-API-Key': API_KEY})
+    response = client.get(f'/admin/db/{short_code}', headers={'X-API-Key': API_KEY})
     assert response.status_code == 200
 
     # Clean up
     delete_response = client.delete(
-        f'/debug/db/{short_code}',
+        f'/admin/db/{short_code}',
         headers={'X-API-Key': API_KEY}
     )
     assert delete_response.status_code == 200
 
 
 def test_get_urls_by_url_query(client):
-    """Test searching URLs by a partial match via /debug/db/query."""
+    """Test searching URLs by a partial match via /admin/db."""
     # Create a short URL entry
     test_url = 'https://example.com'
     response = client.post(
@@ -227,7 +227,7 @@ def test_get_urls_by_url_query(client):
     # Query the DB using a substring of the original URL
     query_term = 'example'
     response = client.get(
-        f'/debug/db/query?query={query_term}',
+        f'/admin/db?query={query_term}',
         headers={'X-API-Key': API_KEY}
     )
     assert response.status_code == 200
@@ -236,29 +236,29 @@ def test_get_urls_by_url_query(client):
 
     # Clean up the test entry
     delete_response = client.delete(
-        f'/debug/db/{short_code}',
+        f'/admin/db/{short_code}',
         headers={'X-API-Key': API_KEY}
     )
     assert delete_response.status_code == 200
 
 
 def test_get_urls_by_url_query_missing(client):
-    """/debug/db/query query missing."""
-    response = client.get('/debug/db/query', headers={'X-API-Key': API_KEY})
+    """/admin/db query missing."""
+    response = client.get('/admin/db', headers={'X-API-Key': API_KEY})
     assert response.status_code == 400
 
 
 def test_delete_short_code_nonexistent(client):
-    """/debug/db/<short_code> where short code does not exist."""
+    """/admin/db/<short_code> where short code does not exist."""
     delete_response = client.delete(
-        '/debug/db/non_existent_code',
+        '/admin/db/non_existent_code',
         headers={'X-API-Key': API_KEY}
     )
     assert delete_response.status_code == 404
 
 
 def test_delete_old_short_codes(client):
-    """/debug/db/<int> valid request.  
+    """/admin/db/<int> valid request.  
     * if there are other entries in the DB these entries will not be the ones deleted."""
     NUM_TO_DELETE = 3
     created_short_codes = []
@@ -277,7 +277,7 @@ def test_delete_old_short_codes(client):
 
     # Delete the X most recent
     delete_response = client.delete(
-        f'/debug/db/{NUM_TO_DELETE}', 
+        f'/admin/db/{NUM_TO_DELETE}', 
         headers={'X-API-Key': API_KEY}
     )
     assert delete_response.status_code == 200

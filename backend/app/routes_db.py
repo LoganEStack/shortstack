@@ -5,10 +5,10 @@ from .utils import require_api_key
 from .models import URL
 from .db import db
 
-debug = Blueprint('debug', __name__)
+admin = Blueprint('admin', __name__)
 
 
-@debug.route('/debug/db/stats', methods=['GET'])
+@admin.route('/admin/db/stats', methods=['GET'])
 def get_stats():
     """Gets database usage statistics."""
     require_api_key()
@@ -30,7 +30,7 @@ def get_stats():
     }), 200
 
 
-@debug.route('/debug/db/urls', methods=['GET'])
+@admin.route('/admin/db/urls', methods=['GET'])
 def get_urls():
     """Gets all short codes currently in DB. Can specify pagination."""
     require_api_key()
@@ -62,7 +62,7 @@ def get_urls():
     })
 
 
-@debug.route('/debug/db/<short_code>', methods=['GET'])
+@admin.route('/admin/db/<short_code>', methods=['GET'])
 def get_url_by_code(short_code):
     """Gets a specific entry by short code in the DB."""
     require_api_key()
@@ -79,7 +79,7 @@ def get_url_by_code(short_code):
     })
 
 
-@debug.route('/debug/db/query', methods=['GET'])
+@admin.route('/admin/db', methods=['GET'])
 def get_urls_by_url_query():
     """Gets a list of entries based on a URL query."""
     require_api_key()
@@ -98,7 +98,7 @@ def get_urls_by_url_query():
     return jsonify(results)
 
 
-@debug.route('/debug/db/<short_code>', methods=['DELETE'])
+@admin.route('/admin/db/<short_code>', methods=['DELETE'])
 def delete_short_code(short_code):
     """Delete a specific short code in the DB."""
     require_api_key()
@@ -112,7 +112,7 @@ def delete_short_code(short_code):
     return jsonify({'message': f"Short code '{short_code}' deleted"}), 200
 
 
-@debug.route('/debug/db/<int:count>', methods=['DELETE'])
+@admin.route('/admin/db/<int:count>', methods=['DELETE'])
 def delete_old_short_codes(count):
     """Delete X least recent short codes in the DB."""
     require_api_key()
@@ -129,7 +129,7 @@ def delete_old_short_codes(count):
     return jsonify({'message': f'Deleted {len(deleted)} least recent URLs', 'short_codes': deleted}), 200
 
 
-@debug.route('/debug/db/cleanup', methods=['GET'])
+@admin.route('/admin/db/cleanup', methods=['DELETE'])
 def delete_expired_codes():
     """Deletes all expired short codes."""
     require_api_key()
