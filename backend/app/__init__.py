@@ -12,7 +12,7 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    CORS(app, origins=["https://frontend-6oxa.onrender.com", "http://localhost:5173"])
+    CORS(app, resources={r"/*": {"origins": "https://frontend-6oxa.onrender.com"}}, supports_credentials=True)
     db.init_app(app)
     app.register_blueprint(main)
     app.register_blueprint(admin)
