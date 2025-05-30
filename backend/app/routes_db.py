@@ -98,7 +98,7 @@ def get_urls_by_url_query():
     return jsonify(results)
 
 
-@admin.route('/admin/db/<short_code>', methods=['DELETE'])
+@admin.route('/admin/db/<short_code>', methods=['DELETE', "OPTIONS"])
 def delete_short_code(short_code):
     """Delete a specific short code in the DB."""
     require_api_key()
@@ -112,7 +112,7 @@ def delete_short_code(short_code):
     return jsonify({'message': f"Short code '{short_code}' deleted"}), 200
 
 
-@admin.route('/admin/db/<int:count>', methods=['DELETE'])
+@admin.route('/admin/db/<int:count>', methods=['DELETE', "OPTIONS"])
 def delete_old_short_codes(count):
     """Delete X least recent short codes in the DB."""
     require_api_key()
@@ -129,7 +129,7 @@ def delete_old_short_codes(count):
     return jsonify({'message': f'Deleted {len(deleted)} least recent URLs', 'short_codes': deleted}), 200
 
 
-@admin.route('/admin/db/cleanup', methods=['DELETE'])
+@admin.route('/admin/db/cleanup', methods=['DELETE', "OPTIONS"])
 def delete_expired_codes():
     """Deletes all expired short codes."""
     require_api_key()

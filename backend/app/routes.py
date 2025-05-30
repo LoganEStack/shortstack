@@ -13,7 +13,7 @@ main = Blueprint('main', __name__)
 TTL = 7  # days til expiration
 
 
-@main.route('/shorten', methods=['POST'])
+@main.route('/shorten', methods=['POST', "OPTIONS"])
 @limiter.limit(Config.RATE_LIMIT)
 def shorten_url():
     """Returns a string to be used as a short URL and writes it to a DB."""
