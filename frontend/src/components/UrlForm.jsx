@@ -39,7 +39,7 @@ function UrlForm({ setResponse }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const result = await fetchJSON('http://localhost:5000/shorten', {
+        const result = await fetchJSON(`${import.meta.env.VITE_API_BASE_URL}/shorten`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ url: url, alias: alias }),
