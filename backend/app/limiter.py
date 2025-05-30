@@ -1,9 +1,12 @@
+from redis import Redis
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from flask_limiter.errors import RateLimitExceeded
 from flask import request, jsonify
+from config import Config
 
-limiter = Limiter(get_remote_address)
+limiter = Limiter(get_remote_address, storage_uri=Config.REDIS_URL)
+
 
 @limiter.request_filter
 def exempt_internal_ips():

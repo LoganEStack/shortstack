@@ -1,0 +1,48 @@
+services:
+  db:
+    image: postgres:14
+    container_name: postgres-db-dev
+    env_file:
+      - .env.dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata_dev:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    container_name: redis-dev
+    ports:
+      - "6379:6379"
+
+  backend:
+    build: ./backend
+    container_name: flask-backend-dev
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./backend/.env.dev
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ./backend:/app
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: react-frontend-dev
+    command: npm run dev
+    ports:
+      - "5173:5173"  # default Vite dev server port is 5173
+    env_file:
+      - ./frontend/.env.dev
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+volumes:
+  pgdata_dev:

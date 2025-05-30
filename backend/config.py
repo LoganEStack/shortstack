@@ -9,3 +9,4 @@ class Config:
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     RATE_LIMIT=os.getenv('RATE_LIMIT')
+    REDIS_URL=os.getenv("REDIS_URL")

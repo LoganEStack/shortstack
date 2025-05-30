@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 
 function UrlForm({ setResponse }) {
-    const [url, setUrl] = useState('https://example.com/')
+    const [url, setUrl] = useState('')
     const [alias, setAlias] = useState('')
 
     async function fetchJSON(url, options = {}) {

@@ -149,6 +149,7 @@ API_KEY=*key*
 
 
 TODO:
-- Resolve limiter storage warning
-- Containerize with Docker.   Is it better to containerize with Docker before hosting my project?
+- Install Redis
+- Containerize with Docker.
+- Host
 - Add CI/CD with GitHub Actions.
