@@ -23,8 +23,4 @@ def create_app():
     limiter.init_app(app)
     register_error_handlers(app)
     
-    @app.route("/ping")
-    def ping():
-        return "pong"
-
     return app

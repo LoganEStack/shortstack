@@ -13,17 +13,11 @@ main = Blueprint('main', __name__)
 TTL = 7  # days til expiration
 
 
-@main.route("/test", methods=["GET", "OPTIONS"])
-def cors_test():
-    return jsonify({"message": "CORS works!"})
-
-
 @main.route('/shorten', methods=['POST', "OPTIONS"])
 @limiter.limit(Config.RATE_LIMIT, methods=["POST"])
 def shorten_url():
     """Returns a string to be used as a short URL and writes it to a DB."""
     if request.method == 'OPTIONS':
-        # Return early for preflight request with a 200 OK
         return '', 200
     
     validate_db_not_full()
