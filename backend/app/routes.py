@@ -13,6 +13,11 @@ main = Blueprint('main', __name__)
 TTL = 7  # days til expiration
 
 
+@main.route("/test", methods=["GET", "OPTIONS"])
+def cors_test():
+    return jsonify({"message": "CORS works!"})
+
+
 @main.route('/shorten', methods=['POST', "OPTIONS"])
 @limiter.limit(Config.RATE_LIMIT, exempt_when=lambda: request.method == "OPTIONS")
 def shorten_url():
@@ -50,7 +55,6 @@ def shorten_url():
             db.session.rollback()
 
     return jsonify({'error': 'Could not generate a unique short code, please try again.'}), 500
-
 
 
 @main.route('/<short_code>')
