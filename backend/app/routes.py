@@ -19,7 +19,7 @@ def cors_test():
 
 
 @main.route('/shorten', methods=['POST', "OPTIONS"])
-@limiter.limit(Config.RATE_LIMIT, exempt_when=lambda: request.method == "OPTIONS")
+@limiter.limit(Config.RATE_LIMIT, methods=["POST"])
 def shorten_url():
     """Returns a string to be used as a short URL and writes it to a DB."""
     validate_db_not_full()
