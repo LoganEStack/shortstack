@@ -16,7 +16,9 @@ services:
       - "6379:6379"
 
   backend:
-    build: ./backend
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile.dev
     container_name: flask-backend-dev
     ports:
       - "5000:5000"
