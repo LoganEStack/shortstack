@@ -26,3 +26,6 @@ def create_app():
     return app
 
 app = create_app()
+@app.route("/ping")
+def ping():
+    return "pong"
