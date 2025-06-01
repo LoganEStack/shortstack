@@ -12,7 +12,10 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    CORS(app, resources={r"/*": {"origins": "https://frontend-6oxa.onrender.com"}}, supports_credentials=True)
+    CORS(app, resources={r"/*": {"origins": [
+        "https://frontend-6oxa.onrender.com",
+        "https://shortstack.app"
+    ]}}, supports_credentials=True)
     db.init_app(app)
     app.register_blueprint(main)
     app.register_blueprint(admin)
@@ -22,5 +25,5 @@ def create_app():
 
     limiter.init_app(app)
     register_error_handlers(app)
-    
+
     return app
