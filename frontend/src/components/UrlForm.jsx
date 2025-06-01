@@ -61,12 +61,12 @@ function UrlForm({ setResponse }) {
                 />
             </label>
             <label>
-                Optionally, enter a custom URL name
+                Optionally, enter a custom short code
                 <input
                     id="alias"
                     type="text"
                     value={alias}
-                    placeholder="Enter custom URL name"
+                    placeholder="Enter custom short code"
                     title="Alias must contain 5-16 alphanumeric characters, dashes, or underscores"
                     minLength="5"
                     maxLength="16"
