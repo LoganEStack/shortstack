@@ -46,7 +46,7 @@ def shorten_url():
             db.session.add(new_url)
             db.session.commit()
             return jsonify({
-                'short_url': request.host_url + code,
+                'short_url': Config.DOMAIN + code,
                 'expiration_date': expiration_date
             })
         except IntegrityError:

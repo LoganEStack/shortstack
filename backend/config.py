@@ -10,3 +10,4 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     RATE_LIMIT=os.getenv('RATE_LIMIT')
     REDIS_URL=os.getenv("REDIS_URL")
+    DOMAIN="https://shortstack.app/"
