@@ -66,35 +66,60 @@ This results in a maximum of roughly 1.2 million possible entries.
 
 <!-- STRUCTURE -->
 ## Project Structure
+### Backend
+
+```
 backend/
+├── .venv/                      # Virtual environment
 ├── app/
 │   ├── __init__.py
-│   ├── routes.py             # handles base routing
-│   ├── routes_db.py          # handles database routing
-│   ├── models.py             # database table schemas
-│   ├── utils.py              # utility functions
-│   ├── short_code_gen.py     # short code generation function
-│   └── limiter.py            # rate limiting
+│   ├── routes.py              # Handles base routing
+│   ├── routes_db.py           # Handles database routing
+│   ├── models.py              # Database table schemas
+│   ├── utils.py               # Utility functions
+│   ├── short_code_gen.py      # Short code generation function
+│   ├── wsgi.py                # Streamlined app creation factory
+│   └── limiter.py             # Rate limiting
 ├── scripts/
-│   └── cleanup.py            # deletes expired short codes
+│   └── cleanup.py             # Deletes expired short codes
 ├── tests/
-│   └── test_routes.py        # pytest functions
-├── config.py                 # contains environment variables
-├── conftest.py               # for path registering
-├── Dockerfile
+│   └── test_routes.py         # Pytest functions
+├── .env.dev                   # Development environment variables
+├── .env.prod                  # Production environment variables
+├── config.py                  # Contains environment variables
+├── conftest.py                # For path registering
+├── Dockerfile.dev
+├── Dockerfile.prod
+├── run.py                     # Run the backend
 └── requirements.txt
+```
 
+### Frontend
+
+```
 frontend/
+├── node_modules/
 ├── public/
 ├── src/
 │   ├── assets/
 │   ├── components/
+│   │   ├── Response.jsx        # Displays response
+│   │   └── UrlForm.jsx         # URL form component
 │   ├── pages/
+│   │   ├── Home.jsx            # Homepage
+│   │   └── NotFound.jsx        # 404 Page
 │   ├── App.jsx
 │   └── main.jsx
-├── Dockerfile
+├── .env.dev                   # Development environment variables
+├── .env.prod                  # Production environment variables
+├── Dockerfile.dev
+├── Dockerfile.prod
+├── index.html
+├── nginx.conf
+├── package.lock.json
 ├── package.json
 └── vite.config.js
+```
 
 <!-- GETTING STARTED -->
 ## Getting Started
