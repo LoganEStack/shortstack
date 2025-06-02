@@ -2,7 +2,7 @@
 # Short Stack
 A URL shortening service.
 
-![Product Name Screen Shot][product-screenshot]
+[![Product Name Screen Shot][product-screenshot]](https://shortstack.app/)
 
 
 <!-- ABOUT -->
@@ -28,7 +28,7 @@ Non-Functional Requirements:
 - Backend: Flask (Python)
 - Database: PostgreSQL
 - Containerization: Docker
-- CI/CD: GitHub Actions
+- Hosting: Render
 
 ### API Design
 Method   |   Endpoint               |	Description
@@ -41,6 +41,8 @@ GET      |	/admin/db/<short_code>  |	Returns data for specific short code
 GET      |	/admin/db?query         |	Returns urls matching a query
 DELETE   |	/admin/db/<short_code>  |	Deletes a specific short code
 DELETE   |	/admin/db/<int:count>   |	Deletes X least recent short codes
+
+The base URL corresponds to the frontend, while the subdomain go.shortstack.app corresponds to the backend.
 
 ### Database Schema
 Table: urls
@@ -138,18 +140,32 @@ Must have the following installed:
    ```
 
 ### Environment
-.env file
-FLASK_ENV=development
-DATABASE_URL=postgresql://*user*:*pass*@localhost:*port*/*db_name*
-API_KEY=*key*
+There are 3 folders that need environment variable files. Each one should have both a .env.dev and a .env.prod file.
 
+root
+```
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+POSTGRES_DB=
+```
+
+/frontend
+```
+VITE_API_URL=
+```
+
+/backend
+```
+FLASK_ENV=
+DATABASE_URL=
+API_KEY=
+RATE_LIMIT="10 per minute; 30 per day"
+REDIS_URL=
+```
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [product-screenshot]: frontend/src/assets/product-screenshot.png
 
 
-TODO:
-- Install Redis
-- Containerize with Docker.
-- Host
-- Add CI/CD with GitHub Actions.
+## TODO:
+- Connect redis to a database
