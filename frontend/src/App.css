@@ -26,7 +26,7 @@ body {
 }
 
 header {
-    padding: 2rem;
+    padding: 1.5rem;
 }
 
 h1 {
@@ -39,7 +39,6 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2rem;
     width: 100%;
     max-width: 400px;
 }
@@ -52,16 +51,18 @@ form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    align-self: center;
     gap: 1.5rem;
     width: 100%;
     box-sizing: border-box;
 }
 
 label {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
+    display: block;
+    width: 90%;
+    max-width: 300px;
+    margin: 0 auto;
+    text-align: left;
     font-size: 1rem;
     color: var(--coffee);
     box-sizing: border-box;
