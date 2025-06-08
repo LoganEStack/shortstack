@@ -1,8 +1,14 @@
 import os
 from dotenv import load_dotenv
+from pathlib import Path
+
+
+ENV = "development"
 
 # Load variables from .env into environment
-load_dotenv()
+BASE_DIR = Path(__file__).resolve().parent
+dotenv_path = BASE_DIR / f".env.{ENV}"
+load_dotenv(dotenv_path)
 
 class Config:
     API_KEY = os.getenv('API_KEY')

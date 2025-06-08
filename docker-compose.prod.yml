@@ -3,7 +3,7 @@ services:
     image: postgres:14
     container_name: postgres-db-prod
     env_file:
-      - .env.prod
+      - .env.production
     ports:
       - "5432:5432"
     volumes:
@@ -23,7 +23,7 @@ services:
     ports:
       - "5000:5000"
     env_file:
-      - ./backend/.env.prod
+      - ./backend/.env.production
     depends_on:
       - db
       - redis
@@ -38,7 +38,7 @@ services:
     ports:
       - "3000:80" # React prod server runs on 80
     env_file:
-      - ./frontend/.env.prod
+      - ./frontend/.env.production
     stdin_open: true
     tty: true
     volumes:

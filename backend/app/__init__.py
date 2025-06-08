@@ -13,6 +13,7 @@ def create_app():
     app.config.from_object(Config)
 
     CORS(app, resources={r"/*": {"origins": [
+        "http://localhost:5173",
         "https://frontend-6oxa.onrender.com",
         "https://shortstack.app"
     ]}}, supports_credentials=True)

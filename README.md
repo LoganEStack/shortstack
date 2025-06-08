@@ -165,28 +165,39 @@ Must have the following installed:
    ```
 
 ### Environment
-There are 3 folders that need environment variable files. Each one should have both a .env.dev and a .env.prod file.
+There are 3 folders that need environment variable files. Each one should have both a .env.development and a .env.production file.
 
-root
+./ (root)
 ```
 POSTGRES_USER=
 POSTGRES_PASSWORD=
 POSTGRES_DB=
 ```
 
-/frontend
+./frontend - Automatically determines between development and production based on npm run dev or npm run build. This project uses Vite, which requires environment variables to be preceded by "VITE_"
 ```
 VITE_API_URL=
 ```
 
-/backend
+./backend - Swap between development and production by changing the variable ENV in ./backend/config.py
 ```
-FLASK_ENV=
 DATABASE_URL=
 API_KEY=
 RATE_LIMIT="10 per minute; 30 per day"
 REDIS_URL=
 ```
+
+
+### Docker
+Both the front and backend have Dockerfiles for dev and prod. These are all managed together using dev and prod docker-compose files. You can build a docker-compose file with
+```
+docker-compose -f docker-compose.dev.yml up --build
+```
+or
+```
+docker-compose -f docker-compose.prod.yml up --build
+```
+
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [product-screenshot]: frontend/src/assets/product-screenshot.png
